@@ -1,14 +1,26 @@
 global using BlazorEcommerceWebApp.Shared;
+global using Microsoft.EntityFrameworkCore;
+global using BlazorEcommerceWebApp.Server.Data;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+// Configure DbCOntext for SQL server with default connection string
+builder.Services.AddDbContext<DataContext>(options => {
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
+
+app.UseSwaggerUI();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -22,6 +34,7 @@ else
     app.UseHsts();
 }
 
+app.UseSwagger();
 app.UseHttpsRedirection();
 
 app.UseBlazorFrameworkFiles();
