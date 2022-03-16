@@ -1,5 +1,19 @@
 ﻿@page "/"
+@page "/{categoryUrl}"
+@inject IProductService ProductService
 
 <PageTitle>Web Store</PageTitle>
 
 <ProductList />
+
+@code {
+    [Parameter]
+    public string? CategoryUrl { get; set; } = null;
+
+    // When parameters are set we make the get products call
+    // ProductList reacts to this call by subscribing to the ProductsChanged event
+    protected override async Task OnParametersSetAsync()
+    {
+        await ProductService.GetProductList(CategoryUrl);
+    }
+}
