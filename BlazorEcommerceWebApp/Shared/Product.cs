@@ -8,11 +8,8 @@ namespace BlazorEcommerceWebApp.Shared
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
-
-        // define digits to be used
-        [Column(TypeName = "decimal(18,2)")]
-        public decimal Price { get; set; }
         public Category? Category { get; set; }
         public int CategoryId { get; set; }
+        public List<ProductVariant> Variants { get; set; } = new List<ProductVariant>();
     }
 }
